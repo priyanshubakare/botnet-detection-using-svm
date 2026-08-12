@@ -1,0 +1,86 @@
+<!-- templates/evaluate.html -->
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Model Evaluation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: system-ui, Arial, sans-serif; margin: 24px; }
+    .card { border: 1px solid #ddd; border-radius: 10px; padding: 16px; margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { border: 1px solid #e5e5e5; padding: 8px; text-align: left; }
+    th { background: #f7f7f7; }
+    code { background: #f5f5f5; padding: 2px 6px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <h1>Model Evaluation (Test Set)</h1>
+  <p>Total test rows: <strong>{{ n_rows }}</strong>. Target: <code>{{ target_col }}</code></p>
+
+  <div class="card">
+    <h3>Summary Metrics</h3>
+    <ul>
+      <li>Accuracy: <strong>{{ accuracy }}</strong></li>
+      <li>Precision (weighted): <strong>{{ precision }}</strong></li>
+      <li>Recall (weighted): <strong>{{ recall }}</strong></li>
+      <li>F1 (weighted): <strong>{{ f1 }}</strong></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Confusion Matrix</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>True \\ Pred</th>
+          {% for lab in labels %}
+            <th>{{ lab }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row, true_lab in cm|zip:labels %}
+        {% endfor %}
+        {% for i in cm|length|make_list %}{% endfor %}
+        {% for i in range(cm|length) %}
+          <tr>
+            <th>{{ labels.i }}</th>
+            {% for val in cm.i %}
+              <td>{{ val }}</td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <p style="margin-top:8px"><em>Order of labels:</em> {{ labels }}</p>
+  </div>
+
+  <div class="card">
+    <h3>Classification Report</h3>
+    <pre>{{ report }}</pre>
+  </div>
+
+  <div class="card">
+    <h3>Preview (first 25 rows)</h3>
+    <table>
+      <thead>
+        <tr>
+          {% for c in preview_cols %}<th>{{ c }}</th>{% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in preview_rows %}
+          <tr>
+            {% for c in preview_cols %}
+              <td>{{ row|get_item:c }}</td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <p><a href="{% url 'predict_form' %}">Go to Predict Form</a></p>
+</body>
+</html>

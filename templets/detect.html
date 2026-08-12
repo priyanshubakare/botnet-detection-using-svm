@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block title %}Detect APK{% endblock %}
+{% block extra_head %}
+<style>
+  .drop-zone{padding:26px;border:1.5px dashed rgba(255,255,255,.18);border-radius:22px;background:rgba(255,255,255,.04)}
+  .stat-box{padding:18px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);height:100%}
+  .result-pill{display:inline-block;padding:10px 16px;border-radius:999px;font-weight:800}
+  .result-pill.success{background:linear-gradient(90deg,#86efac,#2dd4bf);color:#04231d}
+  .result-pill.danger{background:linear-gradient(90deg,#fb7185,#f43f5e);color:#fff}
+  .chip-wrap{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.10);font-size:.88rem}
+  .upload-note{font-size:.92rem;color:var(--muted)}
+  .scan-glow{box-shadow:0 0 0 1px rgba(255,255,255,.08),0 24px 54px rgba(6,182,212,.12)}
+</style>
+{% endblock %}
+{% block body %}
+<div class="glass hero-card mb-4 scan-glow">
+  <span class="hero-badge">📲 Single APK Analysis</span>
+  <div class="row align-items-center g-4">
+    <div class="col-lg-7">
+      <h1 class="section-title">Upload one APK file and check whether it is botnet or not.</h1>
+      <p class="section-subtitle mb-0">The system extracts static features from the APK and uses your saved SVM model for classification.</p>
+    </div>
+    <div class="col-lg-5">
+      <div class="glass p-4 h-100">
+        <div class="mini-pill mb-3">Model details</div>
+        <div class="section-subtitle">Feature count used by model: <strong class="text-white">{{ feature_count }}</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-5">
+    <div class="glass hero-card h-100">
+      <h3 class="h4 fw-bold mb-3">APK Upload</h3>
+      {% if error %}
+        <div class="alert alert-warning">{{ error }}</div>
+      {% endif %}
+      <form method="post" enctype="multipart/form-data" id="apk-form">
+        {% csrf_token %}
+        <div class="drop-zone mb-3">
+          <label class="form-label fw-bold">Choose APK file</label>
+          <input type="file" class="form-control" name="apk_file" accept=".apk" required>
+          <div class="upload-note mt-3">Supported format: .apk only</div>
+        </div>
+        <button type="submit" class="btn btn-primary-glow w-100">Analyze APK</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-lg-7">
+    <div class="glass hero-card h-100">
+      <h3 class="h4 fw-bold mb-3">Detection Result</h3>
+      {% if result %}
+        <div class="d-flex flex-wrap justify-content-between gap-3 align-items-start mb-3">
+          <div>
+            <div class="text-white fw-bold fs-5">{{ result.file_name }}</div>
+            <div class="section-subtitle">{{ result.app_name }} • {{ result.package_name }}</div>
+          </div>
+          <div class="result-pill {{ result.color }}">{{ result.label }}</div>
+        </div>
+        <div class="section-subtitle mb-4">{{ result.subtitle }}</div>
+
+        <div class="row g-3 mb-4">
+          <div class="col-md-4"><div class="stat-box"><div class="section-subtitle small">Confidence</div><div class="fw-bold fs-4">{% if result.confidence %}{{ result.confidence }}%{% else %}N/A{% endif %}</div></div></div>
+          <div class="col-md-4"><div class="stat-box"><div class="section-subtitle small">Risk Level</div><div class="fw-bold fs-5">{{ result.risk_level }}</div></div></div>
+          <div class="col-md-4"><div class="stat-box"><div class="section-subtitle small">Active Features</div><div class="fw-bold fs-4">{{ result.active_count }}</div></div></div>
+        </div>
+
+        <div class="glass p-3 mb-3">
+          <div class="fw-bold mb-2">APK Summary</div>
+          <div class="section-subtitle small">Permissions Found: <span class="text-white fw-semibold">{{ result.permissions_count }}</span></div>
+          <div class="section-subtitle small">Detected Feature Space: <span class="text-white fw-semibold">{{ result.feature_count }}</span></div>
+        </div>
+
+        <div class="fw-bold mb-2">Detected Active Features</div>
+        {% if result.active_features %}
+          <div class="chip-wrap">
+            {% for feat in result.active_features %}
+              <span class="chip">{{ feat }}</span>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="section-subtitle">No active features were matched by the current extractor.</div>
+        {% endif %}
+      {% else %}
+        <div class="section-subtitle">No APK analyzed yet. Upload a file to see the prediction, confidence, and extracted features here.</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block extra_scripts %}
+<script>
+  const form = document.getElementById('apk-form');
+  if (form) {
+    form.addEventListener('submit', function(){
+      const btn = form.querySelector('button[type="submit"]');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerText = 'Scanning APK...';
+      }
+    });
+  }
+</script>
+{% endblock %}

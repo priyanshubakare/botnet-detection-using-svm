@@ -1,0 +1,96 @@
+<!-- botnet/templates/botnet.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mobile Botnet Detection</title>
+  <style>
+    body {
+      background-color: #800080;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    h1 {
+      text-align: center;
+      color: gold;
+    }
+    form {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      padding: 20px;
+      margin: auto;
+      max-width: 900px;
+      background-color: #550055;
+      border-radius: 10px;
+    }
+    input {
+      width: 80px;
+      padding: 5px;
+      font-size: 16px;
+    }
+    label {
+      font-size: 16px;
+    }
+    .submit {
+      grid-column: 1 / 4;
+      text-align: center;
+    }
+    button {
+      font-size: 18px;
+      padding: 10px 20px;
+      background-color: gold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .result {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Mobile Botnet Detection </h1>
+
+  <form method="POST">
+    {% csrf_token %}
+    <label>Telephony Get Device ID</label><input type="number" name="tele_device" required min="0" max="1">
+    <label>Telephony Get Subscriber ID</label><input type="number" name="tele_subscriber" required min="0" max="1">
+    <label>Abort Broadcast</label><input type="number" name="abort" required min="0" max="1">
+    <label>Send SMS</label><input type="number" name="sendsms" required min="0" max="1">
+    <label>Delete Packages</label><input type="number" name="delete_pack" required min="0" max="1">
+    <label>Phone State</label><input type="number" name="phone_s" required min="0" max="1">
+    <label>SMS Received</label><input type="number" name="sms_received" required min="0" max="1">
+    <label>Ljava.net.InetSocketAddress</label><input type="number" name="ljava" required min="0" max="1">
+    <label>Read SMS</label><input type="number" name="readsms" required min="0" max="1">
+    <label>Boot Completed</label><input type="number" name="boot_comp" required min="0" max="1">
+    <label>IO.File.*delete</label><input type="number" name="io_delete" required min="0" max="1">
+    <label>Chown</label><input type="number" name="chown" required min="0" max="1">
+    <label>Chmod</label><input type="number" name="chmod" required min="0" max="1">
+    <label>Mount</label><input type="number" name="mount" required min="0" max="1">
+    <label>.APK</label><input type="number" name="apk" required min="0" max="1">
+    <label>.ZIP</label><input type="number" name="zip_file" required min="0" max="1">
+    <label>.DEX</label><input type="number" name="dex_file" required min="0" max="1">
+    <label>Camera</label><input type="number" name="camera" required min="0" max="1">
+    <label>Access Fine Location</label><input type="number" name="access" required min="0" max="1">
+    <label>Install Packages</label><input type="number" name="package" required min="0" max="1">
+    <label>Battery Low</label><input type="number" name="battery_low" required min="0" max="1">
+    <label>.SO</label><input type="number" name="so_file" required min="0" max="1">
+    <label>Power Connected</label><input type="number" name="power_connec" required min="0" max="1">
+    <label>System Load Library</label><input type="number" name="load_lib" required min="0" max="1">
+    <label>.EXE</label><input type="number" name="exe_file" required min="0" max="1">
+
+    <div class="submit">
+      <button type="submit">Detect</button>
+    </div>
+  </form>
+
+  {% if result %}
+  <div class="result" style="color: {{ color }};">
+    {{ result }}
+  </div>
+  {% endif %}
+</body>
+</html>

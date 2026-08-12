@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block body %}
+<div class="glass hero-card mb-4">
+  <span class="hero-badge">🚀 Welcome</span>
+  <h1 class="section-title">Mobile Botnet Detection Dashboard</h1>
+  <p class="section-subtitle">Use the main actions below to navigate your project quickly.</p>
+</div>
+<div class="row g-4">
+  <div class="col-lg-4"><div class="glass feature-card"><div class="feature-icon">🔎</div><h5>Detect APK</h5><p class="section-subtitle">Upload one APK and run the botnet screening flow.</p><a href="{% url 'botnet' %}" class="btn btn-primary-glow mt-3">Open Detection</a></div></div>
+  {% comment %} <div class="col-lg-4"><div class="glass feature-card"><div class="feature-icon">🧠</div><h5>Retrain Model</h5><p class="section-subtitle">Trigger the training pipeline from your existing project.</p><a href="{% url 'retrain_model1' %}" class="btn btn-outline-soft mt-3">Retrain</a></div></div> {% endcomment %}
+  <div class="col-lg-4"><div class="glass feature-card"><div class="feature-icon">📘</div><h5>About Project</h5><p class="section-subtitle">See architecture, flow, and usage information.</p><a href="{% url 'about' %}" class="btn btn-outline-soft mt-3">Read More</a></div></div>
+</div>
+
+<br><br><br><br><br><br>
+<br><br>
+{% endblock %}

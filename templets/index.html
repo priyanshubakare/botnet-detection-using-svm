@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block body %}
+<div class="glass hero-card mb-4">
+  <span class="hero-badge">🛡️ Smart Android Security Screening</span>
+  <div class="row align-items-center g-4">
+    <div class="col-lg-7">
+      <h1 class="section-title">Upload one APK and instantly check whether it looks like a botnet or a normal app.</h1>
+      <p class="section-subtitle mb-4">Your system uses a trained machine learning model with static APK feature extraction such as permissions, embedded files, manifest actions, and selected code patterns.</p>
+      <div class="d-flex flex-wrap gap-3">
+        <a href="{% url 'botnet' %}" class="btn btn-primary-glow">Start APK Detection</a>
+        <a href="{% url 'about' %}" class="btn btn-outline-soft">Project Overview</a>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="glass p-4 h-100">
+        <div class="mini-pill mb-3">Detection Flow</div>
+        <div class="d-grid gap-3">
+          <div class="feature-card glass">
+            <div class="fw-bold mb-1">1. Upload APK</div>
+            <div class="section-subtitle small">Choose one Android APK file from your system.</div>
+          </div>
+          <div class="feature-card glass">
+            <div class="fw-bold mb-1">2. Extract Features</div>
+            <div class="section-subtitle small">System reads permission, manifest, DEX, and static indicators.</div>
+          </div>
+          <div class="feature-card glass">
+            <div class="fw-bold mb-1">3. Predict</div>
+            <div class="section-subtitle small">SVM model classifies the APK as normal or suspicious.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-md-4"><div class="glass feature-card"><div class="feature-icon">📱</div><h5>Single APK Scan</h5><p class="section-subtitle mb-0">Simple workflow focused on one uploaded APK file at a time.</p></div></div>
+  <div class="col-md-4"><div class="glass feature-card"><div class="feature-icon">⚙️</div><h5>Feature Mapping</h5><p class="section-subtitle mb-0">Aligns extracted signals with your trained model feature order.</p></div></div>
+  <div class="col-md-4"><div class="glass feature-card"><div class="feature-icon">✨</div><h5>Modern Interface</h5><p class="section-subtitle mb-0">Fresh layout with navbar, footer, hero area, and result cards.</p></div></div>
+</div>
+{% endblock %}

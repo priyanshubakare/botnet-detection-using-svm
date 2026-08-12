@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}About{% endblock %}
+{% block body %}
+<div class="glass hero-card mb-4">
+  <span class="hero-badge">ℹ️ About the Project</span>
+  <h1 class="section-title">Android APK Botnet Detection using static feature extraction and machine learning</h1>
+  <p class="section-subtitle mb-0">This project screens uploaded APK files by extracting important static indicators and using your trained classifier to decide whether the app looks benign or suspicious.</p>
+</div>
+<div class="row g-4">
+  <div class="col-lg-6"><div class="glass feature-card"><h5>How it works</h5><p class="section-subtitle mb-0">The system reads APK metadata such as permissions, Android manifest actions, file types like DEX and SO, and selected code/string traces. Those extracted values are mapped to the same feature order used during training and passed to the saved SVM model.</p></div></div>
+  <div class="col-lg-6"><div class="glass feature-card"><h5>Why static analysis</h5><p class="section-subtitle mb-0">Static analysis is fast and practical for academic and demo projects. It helps identify risky behavior before installation, though it is not a replacement for full sandbox or dynamic malware analysis.</p></div></div>
+</div>
+
+<br><br><br><br><br><br>
+<br><br><br>
+{% endblock %}

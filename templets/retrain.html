@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Retrain Model{% endblock %}
+{% block body %}
+<div class="row justify-content-center">
+  <div class="col-lg-7">
+    <div class="glass hero-card text-center">
+      <span class="hero-badge">🧠 Model Training</span>
+      <h1 class="section-title h2">Retrain your botnet model</h1>
+      <p class="section-subtitle">Use this page to trigger the existing training script from your Django project.</p>
+      {% if message %}
+        <div class="alert alert-soft mt-3">{{ message }}</div>
+      {% endif %}
+      <form method="post" class="mt-4">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary-glow">Start Retraining</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

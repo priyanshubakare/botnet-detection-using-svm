@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock %}
+{% block body %}
+<br><br><br>
+<div class="row justify-content-center">
+  <div class="col-lg-6">
+    <div class="glass hero-card">
+      <span class="hero-badge">📝 Registration</span>
+      <h1 class="section-title h2">Create your account</h1>
+      <form method="post" class="mt-4">
+        {% csrf_token %}
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Username</label>
+            {{ register_form.username }}
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Email</label>
+            {{ register_form.email }}
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Password</label>
+            {{ register_form.password1 }}
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Confirm Password</label>
+            {{ register_form.password2 }}
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary-glow w-100 mt-4">Register</button>
+      </form>
+    </div>
+  </div>
+</div>
+<br><br><br><br><br><br>
+<br><br>
+{% endblock %}
